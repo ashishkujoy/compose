@@ -20,6 +20,7 @@ services:
     environment:
       - DATABASE_URL=postgres://postgres@db:5432/postgres
       - PORT=8000
+      - DELAY_TIME=8000
       - SECRET_MESSAGE="Hello i am server1"
 
   api2:
@@ -29,6 +30,7 @@ services:
     environment:
       - DATABASE_URL=postgres://postgres@db:5432/postgres
       - PORT=8001
+      - DELAY_TIME=8001
       - SECRET_MESSAGE="Hello i am server2"
 
   db:
