@@ -1,11 +1,11 @@
 FROM node:11
 
-WORKDIR /app
+WORKDIR /loadBalancer
 
 COPY package.json .
 
-RUN npm install
+RUN npm install && npm install nodemon -g
 
-COPY . .
+# COPY . .
 
-CMD [ "npm", "start" ]
+CMD [ "nodemon", "balancer.js" ]
