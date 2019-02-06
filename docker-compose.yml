@@ -2,7 +2,7 @@ version: "3"
 
 services:
   proxyserver:
-    image: ashishkujoy/balancer:1
+    build: ./loadBalancer
     depends_on: 
       - api1
       - api2
