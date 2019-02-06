@@ -1,0 +1,38 @@
+version: "3"
+
+services:
+  proxyserver:
+    image: ashishkujoy/balancer:1
+    depends_on: 
+      - api1
+      - api2
+    ports:
+      - "9000:9000"
+    environment:
+      - HOSTS=http://api1:8000,http://api2:8001
+
+  api1:
+    build: ./backend
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=postgres://postgres@db:5432/postgres
+      - PORT=8000
+      - SECRET_MESSAGE="Hello i am server1"
+
+  api2:
+    build: ./backend
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=postgres://postgres@db:5432/postgres
+      - PORT=8001
+      - SECRET_MESSAGE="Hello i am server2"
+
+  db:
+    image: postgres:9.6.1
+    volumes:
+      - dbData:/var/lib/postgresql/data
+
+volumes:
+  dbData:
