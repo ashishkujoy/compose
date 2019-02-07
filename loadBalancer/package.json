@@ -1,5 +1,5 @@
 {
-  "name": "loadBalancer",
+  "name": "load_Balancer",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.16.4",
-    "http-proxy": "^1.17.0"
+    "http-proxy": "^1.17.0",
+    "request": "^2.88.0"
   }
 }

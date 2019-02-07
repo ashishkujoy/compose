@@ -6,6 +6,6 @@ COPY package.json .
 
 RUN npm install && npm install nodemon -g
 
-# COPY . .
+COPY . .
 
 CMD [ "nodemon", "balancer.js" ]

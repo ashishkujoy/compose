@@ -8,8 +8,8 @@ services:
       - api2
     ports:
       - "9000:9000"
-    volumes:
-      - ./loadBalancer:/loadBalancer
+    # volumes:
+    #   - ./loadBalancer:/loadBalancer
     environment:
       - HOSTS=http://api1:8000,http://api2:8001
 

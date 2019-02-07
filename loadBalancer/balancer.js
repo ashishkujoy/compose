@@ -1,8 +1,17 @@
 const httpProxy = require('http-proxy');
 const app = require('express')();
-const hosts = process.env.HOSTS.split(',');
+const request = require('request');
+let hosts = process.env.HOSTS.split(',');
 let counter = 1;
 const PORT = process.env.PORT || 9000;
+
+const filterUnhealthyHosts = function () {
+    hosts.forEach(host => {
+        request(`${host}/health`,(err,response) => {
+
+        });
+    });
+};
 
 
 app.use((req, res) => {
