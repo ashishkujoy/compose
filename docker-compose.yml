@@ -14,7 +14,7 @@ services:
       - HOSTS=http://api1:8000,http://api2:8001
 
   api1:
-    build: ./backend
+    build: ./apiserver
     depends_on:
       - db
     environment:
@@ -24,7 +24,7 @@ services:
       - SECRET_MESSAGE="Hello i am server1"
 
   api2:
-    build: ./backend
+    build: ./apiserver
     depends_on:
       - db
     environment:
