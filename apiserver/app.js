@@ -40,9 +40,15 @@ app.get('/health', (req, res) => {
 });
 
 app.get('/sleep', (req, res) => {
-    setTimeout(() => {
-        res.json({ message: "apnaa time aayega" });
-    }, delayTime);
+    console.log('about to sleep');
+    var isSleeping = true;
+    setTimeout(function(){
+        console.log('-------------------------========================')
+        isSleeping = false;
+        res.end();
+    },100)
+
+    while (isSleeping) { }
 });
 
 app.get('/', (req, res) => {

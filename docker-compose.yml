@@ -17,20 +17,24 @@ services:
     build: ./apiserver
     depends_on:
       - db
+    ports:
+      - "8000:8000"
     environment:
       - DATABASE_URL=postgres://postgres@db:5432/postgres
       - PORT=8000
-      - DELAY_TIME=8000
+      - DELAY_TIME=6000
       - SECRET_MESSAGE="Hello i am server1"
 
   api2:
     build: ./apiserver
     depends_on:
       - db
+    ports:
+      - "8001:8001"
     environment:
       - DATABASE_URL=postgres://postgres@db:5432/postgres
       - PORT=8001
-      - DELAY_TIME=8001
+      - DELAY_TIME=6000
       - SECRET_MESSAGE="Hello i am server2"
 
   db:
