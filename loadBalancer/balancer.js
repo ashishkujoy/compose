@@ -5,15 +5,6 @@ let hosts = process.env.HOSTS.split(',');
 let counter = 1;
 const PORT = process.env.PORT || 9000;
 
-const filterUnhealthyHosts = function () {
-    hosts.forEach(host => {
-        request(`${host}/health`,(err,response) => {
-
-        });
-    });
-};
-
-
 app.use((req, res) => {
     const proxyServer = httpProxy.createProxyServer({ target: hosts[counter % hosts.length] });
     proxyServer.on('error', () => res.end());
