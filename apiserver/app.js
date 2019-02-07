@@ -40,15 +40,9 @@ app.get('/health', (req, res) => {
 });
 
 app.get('/sleep', (req, res) => {
-    console.log('about to sleep');
-    var isSleeping = true;
-    setTimeout(function(){
-        console.log('-------------------------========================')
-        isSleeping = false;
-        res.end();
-    },100)
-
-    while (isSleeping) { }
+    let startTime = Date.now();
+    while ((Date.now() - startTime) < delayTime) {}
+    res.end();
 });
 
 app.get('/', (req, res) => {
