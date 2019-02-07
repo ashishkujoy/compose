@@ -1,11 +1,14 @@
 const httpProxy = require('http-proxy');
 const app = require('express')();
+const bodyParser = require('body-parser');
 const request = require('request');
-const allHosts = process.env.HOSTS.split(',');
+const allHosts = [];
 const TIME_OUT = 500;
 let activeHost = [];
 let counter = 1;
 const PORT = process.env.PORT || 9000;
+
+app.use(bodyParser());
 
 const filterUnhealthyHosts = function () {
     activeHost = new Array();
@@ -21,6 +24,13 @@ const filterUnhealthyHosts = function () {
 };
 
 setInterval(filterUnhealthyHosts, 200);
+
+app.post('/join',(req,res) => {
+    let hostAddress = req.body.hostAddress;
+    console.log(hostAddress);
+    allHosts.push(hostAddress);
+    res.end();
+});
 
 app.get('/activeHosts', (req, res) => {
     res.json({ activeHosts: activeHost });

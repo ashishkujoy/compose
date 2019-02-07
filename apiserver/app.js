@@ -1,11 +1,14 @@
 const app = require('express')();
+const request = require('request');
 const bodyParser = require('body-parser');
 const PORT = process.env.PORT;
-let connectionString = process.env.DATABASE_URL || "postgres://localhost:5432/postgres";
+const connectionString = process.env.DATABASE_URL || "postgres://localhost:5432/postgres";
 const { Client } = require('pg');
 const client = new Client(connectionString);
 const SECRET_MESSAGE = process.env.SECRET_MESSAGE;
 const delayTime = process.env.DELAY_TIME;
+const MY_HOST_ADDRESS = process.env.MY_HOST_ADDRESS;
+const LOAD_BALANCER_URL = process.env.LOAD_BALANCER_URL;
 
 app.use(bodyParser());
 
@@ -41,7 +44,7 @@ app.get('/health', (req, res) => {
 
 app.get('/sleep', (req, res) => {
     let startTime = Date.now();
-    while ((Date.now() - startTime) < delayTime) {}
+    while ((Date.now() - startTime) < delayTime) { }
     res.end();
 });
 
@@ -58,6 +61,9 @@ client.connect()
             } else {
                 app.listen(PORT, () => {
                     console.log(`App listening on ${PORT}`);
+                    request.post(`${LOAD_BALANCER_URL}/join`, { form: { hostAddress: MY_HOST_ADDRESS } }, (err, res) => {
+                        if (err) console.error(err);
+                    })
                 });
             }
         });

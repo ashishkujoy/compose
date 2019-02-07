@@ -3,20 +3,16 @@ version: "3"
 services:
   proxyserver:
     build: ./loadBalancer
-    depends_on: 
-      - api1
-      - api2
     ports:
       - "9000:9000"
     volumes:
       - ./loadBalancer/balancer.js:/loadBalancer/balancer.js
-    environment:
-      - HOSTS=http://api1:8000,http://api2:8001
 
   api1:
     build: ./apiserver
     depends_on:
       - db
+      - proxyserver
     ports:
       - "8000:8000"
     environment:
@@ -24,11 +20,14 @@ services:
       - PORT=8000
       - DELAY_TIME=6000
       - SECRET_MESSAGE="Hello i am server1"
+      - MY_HOST_ADDRESS=http://api1:8000
+      - LOAD_BALANCER_URL=http://proxyserver:9000
 
   api2:
     build: ./apiserver
     depends_on:
       - db
+      - proxyserver
     ports:
       - "8001:8001"
     environment:
@@ -36,6 +35,8 @@ services:
       - PORT=8001
       - DELAY_TIME=6000
       - SECRET_MESSAGE="Hello i am server2"
+      - MY_HOST_ADDRESS=http://api2:8001
+      - LOAD_BALANCER_URL=http://proxyserver:9000
 
   db:
     image: postgres:9.6.1
