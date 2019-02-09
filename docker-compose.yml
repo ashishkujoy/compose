@@ -7,6 +7,8 @@ services:
       - "9000:9000"
     volumes:
       - ./loadBalancer/balancer.js:/loadBalancer/balancer.js
+    networks:
+      - frontend
 
   api1:
     build: ./apiserver
@@ -22,6 +24,9 @@ services:
       - SECRET_MESSAGE="Hello i am server1"
       - MY_HOST_ADDRESS=http://api1:8000
       - LOAD_BALANCER_URL=http://proxyserver:9000
+    networks:
+      - backend
+      - frontend
 
   api2:
     build: ./apiserver
@@ -37,11 +42,19 @@ services:
       - SECRET_MESSAGE="Hello i am server2"
       - MY_HOST_ADDRESS=http://api2:8001
       - LOAD_BALANCER_URL=http://proxyserver:9000
+  networks:
+      - backend
+      - frontend
 
   db:
     image: postgres:9.6.1
     volumes:
       - dbData:/var/lib/postgresql/data
+    networks:
+      - backend
 
 volumes:
   dbData:
+networks:
+  frontend:
+  backend:
