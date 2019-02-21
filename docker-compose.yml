@@ -42,7 +42,7 @@ services:
       - SECRET_MESSAGE="Hello i am server2"
       - MY_HOST_ADDRESS=http://api2:8001
       - LOAD_BALANCER_URL=http://proxyserver:9000
-  networks:
+    networks:
       - backend
       - frontend
 
